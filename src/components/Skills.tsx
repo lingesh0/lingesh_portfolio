@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { useRef } from 'react';
+import React from 'react';
 
 const skills = [
   { category: 'Programming', items: ['Python', 'Java', 'C++'] },
@@ -33,33 +33,43 @@ function use3DTilt(ref: React.RefObject<HTMLDivElement>) {
   return { handleMouseMove, handleMouseLeave };
 }
 
+interface Skill {
+  category: string;
+  items: string[];
+}
+
+function SkillCard({ skill }: { skill: Skill }) {
+  const ref = React.useRef<HTMLDivElement>(null);
+  const { handleMouseMove, handleMouseLeave } = use3DTilt(ref);
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.6 }}
+      className="rounded-3xl shadow-2xl card-padding card-hover bg-surface text-primary flex flex-col items-center justify-center text-center border-2 border-primary/20 cursor-pointer"
+      style={{ perspective: '1000px' }}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+    >
+      <h3 className="heading-3 gradient-primary bg-clip-text text-transparent mb-4">{skill.category}</h3>
+      <ul className="space-y-1 body-normal text-secondary">
+        {skill.items.map(item => (
+          <li key={item} className="hover:text-accent transition-colors text-lg font-medium">{item}</li>
+        ))}
+      </ul>
+    </motion.div>
+  );
+}
+
 export default function Skills() {
-  const refs = skills.map(() => useRef<HTMLDivElement>(null));
-  const tilts = refs.map(ref => use3DTilt(ref));
   return (
     <section id="skills" className="section-padding w-full flex flex-col items-center justify-center">
       <motion.h2 initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.7 }} className="heading-2 text-center gradient-primary bg-clip-text text-transparent">Skills</motion.h2>
       <div className="grid md:grid-cols-3 grid-normal justify-center w-full max-w-6xl">
-        {skills.map((skill, idx) => (
-          <motion.div
-            key={skill.category}
-            ref={refs[idx]}
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: idx * 0.1, duration: 0.6 }}
-            className="rounded-3xl shadow-2xl card-padding card-hover bg-surface text-primary flex flex-col items-center justify-center text-center border-2 border-primary/20 cursor-pointer"
-            style={{ perspective: '1000px' }}
-            onMouseMove={tilts[idx].handleMouseMove}
-            onMouseLeave={tilts[idx].handleMouseLeave}
-          >
-            <h3 className="heading-3 gradient-primary bg-clip-text text-transparent mb-4">{skill.category}</h3>
-            <ul className="space-y-1 body-normal text-secondary">
-              {skill.items.map(item => (
-                <li key={item} className="hover:text-accent transition-colors text-lg font-medium">{item}</li>
-              ))}
-            </ul>
-          </motion.div>
+        {skills.map((skill) => (
+          <SkillCard key={skill.category} skill={skill} />
         ))}
       </div>
     </section>

@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { useRef } from 'react';
+import React from 'react';
 
 const experiences = [
   {
@@ -37,32 +37,43 @@ function use3DTilt(ref: React.RefObject<HTMLDivElement>) {
   return { handleMouseMove, handleMouseLeave };
 }
 
+interface ExperienceItem {
+  title: string;
+  period: string;
+  description: string;
+}
+
+function ExperienceCard({ exp }: { exp: ExperienceItem }) {
+  const ref = React.useRef<HTMLDivElement>(null);
+  const { handleMouseMove, handleMouseLeave } = use3DTilt(ref);
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, x: -30 }}
+      whileInView={{ opacity: 1, x: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.6 }}
+      className="rounded-3xl shadow-2xl card-padding card-hover bg-surface text-primary flex flex-col items-center justify-center text-center border-2 border-primary/20 cursor-pointer w-full max-w-2xl relative mb-8"
+      style={{ perspective: '1000px' }}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+    >
+      <div className="absolute left-1/2 -translate-x-1/2 -top-8 w-8 h-8 gradient-primary rounded-full border-4 border-surface shadow-lg z-10" />
+      <h3 className="heading-3 gradient-primary bg-clip-text text-transparent mb-2">{exp.title}</h3>
+      <span className="body-small text-secondary mb-2">{exp.period}</span>
+      <p className="body-normal text-muted mt-2">{exp.description}</p>
+    </motion.div>
+  );
+}
+
 export default function Experience() {
-  const refs = experiences.map(() => useRef<HTMLDivElement>(null));
-  const tilts = refs.map(ref => use3DTilt(ref));
   return (
     <section id="experience" className="section-padding w-full flex flex-col items-center justify-center">
       <motion.h2 initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.7 }} className="heading-2 text-center gradient-primary bg-clip-text text-transparent">Experience</motion.h2>
       <div className="container">
         <div className="relative flex flex-col gap-12 items-center justify-center w-full max-w-4xl">
-          {experiences.map((exp, idx) => (
-            <motion.div
-              key={exp.title}
-              ref={refs[idx]}
-              initial={{ opacity: 0, x: -30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: idx * 0.2, duration: 0.6 }}
-              className="rounded-3xl shadow-2xl card-padding card-hover bg-surface text-primary flex flex-col items-center justify-center text-center border-2 border-primary/20 cursor-pointer w-full max-w-2xl relative mb-8"
-              style={{ perspective: '1000px' }}
-              onMouseMove={tilts[idx].handleMouseMove}
-              onMouseLeave={tilts[idx].handleMouseLeave}
-            >
-              <div className="absolute left-1/2 -translate-x-1/2 -top-8 w-8 h-8 gradient-primary rounded-full border-4 border-surface shadow-lg z-10" />
-              <h3 className="heading-3 gradient-primary bg-clip-text text-transparent mb-2">{exp.title}</h3>
-              <span className="body-small text-secondary mb-2">{exp.period}</span>
-              <p className="body-normal text-muted mt-2">{exp.description}</p>
-            </motion.div>
+          {experiences.map((exp) => (
+            <ExperienceCard key={exp.title} exp={exp} />
           ))}
         </div>
       </div>
