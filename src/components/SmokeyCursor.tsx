@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 
-interface SmokeyCursorProps {}
-
+// No props needed, so remove interface
 const colorStops = [
   '#3b82f6', // blue-500
   '#0ea5e9', // sky-500
@@ -16,12 +15,12 @@ function isMobile() {
   return /Mobi|Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 }
 
-const SmokeyCursor: React.FC<SmokeyCursorProps> = () => {
+const SmokeyCursor: React.FC<unknown> = () => {
   const [mounted, setMounted] = useState(false);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const mouse = useRef({ x: -100, y: -100 });
   const trail = useRef({ x: -100, y: -100 });
-  const colorIndex = useRef(0);
+  // Removed unused colorIndex
   const colorTime = useRef(0);
   const frameCount = useRef(0);
 
