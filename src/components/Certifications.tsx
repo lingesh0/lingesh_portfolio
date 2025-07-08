@@ -37,8 +37,8 @@ interface Certification {
 }
 
 function CertificationCard({ cert }: { cert: Certification }) {
-  const ref = React.useRef<HTMLDivElement>(null);
-  const { handleMouseMove, handleMouseLeave } = use3DTilt(ref);
+  const ref = React.useRef<HTMLDivElement | null>(null);
+  const { handleMouseMove, handleMouseLeave } = use3DTilt(ref as React.RefObject<HTMLDivElement>);
   return (
     <motion.div
       ref={ref}
