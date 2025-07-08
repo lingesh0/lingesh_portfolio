@@ -109,7 +109,7 @@ const SmokeyCursor: React.FC<unknown> = () => {
         height: '100vh',
         pointerEvents: 'none',
         zIndex: 9999,
-        mixBlendMode: 'lighter',
+        mixBlendMode: 'lighten',
       }}
     />
   );
