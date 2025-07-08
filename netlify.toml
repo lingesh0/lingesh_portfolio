@@ -1,9 +1,7 @@
 [build]
   command = "npm run build"
   publish = ".next"
-
-[build.environment]
-  NODE_VERSION = "20.17.0" 
+  environment = { NODE_VERSION = "18.18.2" }
 
 [plugins."@netlify/plugin-nextjs"]
-skipForms = true 
+  skipForms = true 
