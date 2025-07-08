@@ -10,7 +10,7 @@ function isMobile() {
 }
 
 export default function HomeSection() {
-  const [animationData, setAnimationData] = useState<any>(null);
+  const [animationData, setAnimationData] = useState<unknown>(null);
   const [isInView, setIsInView] = useState(true);
   const sectionRef = useRef<HTMLDivElement>(null);
 
@@ -46,14 +46,14 @@ export default function HomeSection() {
         {animationData === 'error' && (
           <div className="text-red-400 bg-black bg-opacity-60 p-4 rounded">Lottie animation failed to load.</div>
         )}
-        {animationData && animationData !== 'error' && (
+        {animationData && animationData !== 'error' && typeof animationData === 'object' && animationData !== null ? (
           <Lottie
-            animationData={animationData}
+            animationData={animationData as object}
             loop={true}
             autoplay={isInView}
             style={{ width: '100vw', maxWidth: 900, height: '100vh', minHeight: 400, objectFit: 'cover' }}
           />
-        )}
+        ) : null}
       </div>
       <motion.h1
         initial={{ opacity: 0, y: 40 }}

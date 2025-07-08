@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import SmokeyCursor from "@/components/SmokeyCursor";
 import ClientSmokeyCursorUI from "@/components/ClientSmokeyCursorUI";
 
 const inter = Inter({

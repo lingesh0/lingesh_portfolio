@@ -43,7 +43,7 @@ export default function Navbar() {
     document.documentElement.setAttribute('data-theme', theme);
   }, [theme]);
 
-  const handleNavClick = (e, href) => {
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     e.preventDefault();
     setMobileOpen(false);
     const targetId = href.replace('#', '');
