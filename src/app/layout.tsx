@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import ClientSmokeyCursorUI from "@/components/ClientSmokeyCursorUI";
+import { AuroraBackground } from "@/components/AuroraBackground";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -64,9 +65,11 @@ export default function RootLayout({
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="theme-color" content="#0f172a" />
       </head>
-      <body className={`${inter.variable} font-sans antialiased`}>
-        <ClientSmokeyCursorUI />
-        {children}
+      <body className={`${inter.variable} font-sans antialiased bg-slate-900 text-white`}>
+        <AuroraBackground>
+          <ClientSmokeyCursorUI />
+          {children}
+        </AuroraBackground>
       </body>
     </html>
   );
