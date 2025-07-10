@@ -62,7 +62,7 @@ export default function HomeSection() {
         transition={{ duration: 1 }}
         className="text-4xl md:text-6xl font-bold text-white mb-4 mx-auto drop-shadow-lg"
       >
-        Hi, I’m Lingesh T <span className="inline-block">👋</span>
+        Hi, I’m Lingesh T <span className="inline-block"></span>
       </motion.h1>
       <motion.p
         initial={{ opacity: 0, y: 20 }}
